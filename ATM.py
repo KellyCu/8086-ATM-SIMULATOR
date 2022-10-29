@@ -23,12 +23,12 @@ M1 = 1000
 
 
 def MOV():
-    global M1
-    M1 = AX
+    global CX
+    CX = AX
 
 def SUB():
     global AX
-    AX = M1 - AX
+    AX = AX - BX
 
 def exit():
     ATM_app.quit()
@@ -100,11 +100,13 @@ def btn_comp(tab):
 
     def draw():
         user_input = screen_display.get()
+        global BX
+        BX = int(user_input)
         global AX
-        AX = int(user_input)
+        AX = M1
         screen_display.delete(0, END)
-        if AX != '':
-            if M1 > AX:
+        if BX != '':
+            if AX > BX:
                 tab.destroy()
                 w4 = atm.Tk()
                 w4.title("ATM")
@@ -115,7 +117,7 @@ def btn_comp(tab):
                 MOV()
                 cash = int(user_input)
                 cbal = Label(w4, text="ACCOUNT BALANCE: ------------------------", font=("Century", 25), bg=cblue, fg="white")
-                cbal2 = Label(w4, text="₱" + str(M1) + ".00", font=("Century", 25), bg=cblue, fg="white")
+                cbal2 = Label(w4, text="₱" + str(CX) + ".00", font=("Century", 25), bg=cblue, fg="white")
                 cdraw = Label(w4, text="CASH WITHDRAWN:  -------------------------", font=("Century", 25), bg=cblue, fg="white")
                 cdraw2 = Label(w4, text="₱" + str(cash) + ".00", font=("Century", 25), bg=cblue, fg="white")
                 dispax = Label(w4, text="AX = " + str(AX), font=("Century", 20), bg=cblue, fg="white")
